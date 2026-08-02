@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 
 
 const LoginForm = () => {
-  const [state, action, pending] = useActionState(loginAction, false);
+  const [state, action, pending] = useActionState(loginAction, null);
 
   const router = useRouter();
     useEffect(()=>{
