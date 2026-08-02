@@ -59,11 +59,11 @@ export const loginAction = async (
 
       // রিডাইরেক্ট পাথ নির্ধারণ
       if (decodedToken?.role === "CUSTOMER") {
-        targetPath = "/dashboard";
+        targetPath = "/dashboard/customer";
       } else if (decodedToken?.role === "TECHNICIAN") {
-        targetPath = "/technician-dashboard";
+        targetPath = "/dashboard/technician";
       } else if (decodedToken?.role === "ADMIN") {
-        targetPath = "/admin-dashboard";
+        targetPath = "/dashboard/admin";
       }
     }
   } catch (error) {

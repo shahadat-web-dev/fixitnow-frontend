@@ -18,7 +18,7 @@ const LoginForm = () => {
 
     if(state.success){
       toast.success(state.message || "Login Successfull");
-      router.push("/")
+      router.push("/dashboard")
     }
 
     if(!state.success){

@@ -36,7 +36,6 @@ const RegisterForm = () => {
             name="name" 
             type="text" 
             placeholder="Enter Your Name" 
-            required 
           />
 
           {/* Phone */}
@@ -44,7 +43,7 @@ const RegisterForm = () => {
             name="phone" 
             type="tel" 
             placeholder="Enter Your Phone" 
-            required 
+
           />
 
           {/* Email */}
