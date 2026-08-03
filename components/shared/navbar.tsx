@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { LogOut, Settings, User } from 'lucide-react';
 import {
   DropdownMenu,
@@ -27,6 +28,16 @@ const USER_MENU_ITEMS = [
 ];
 
 export function Navbar() {
+  const pathname = usePathname();
+
+  // Helper to check if a nav item is active
+  const isActive = (href: string) => {
+    if (href === '/') {
+      return pathname === '/';
+    }
+    return pathname === href || pathname.startsWith(`${href}/`);
+  };
+
   return (
     <nav className="border-b bg-background">
       <div className="flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -47,25 +58,28 @@ export function Navbar() {
 
         {/* Desktop Navigation Links */}
         <div className="hidden md:flex items-center gap-8">
-          {NAV_ITEMS.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="text-xl font-bold text-foreground/70 hover:text-green-600 transition-colors"
-            >
-              {item.label}
-            </Link>
-          ))}
+          {NAV_ITEMS.map((item) => {
+            const active = isActive(item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`text-xl font-bold transition-colors ${
+                  active
+                    ? 'text-green-600'
+                    : 'text-foreground/70 hover:text-green-600'
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </div>
 
         {/* User Dropdown */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <div
-            // variant="ghost"
-            //  size="icon" 
-            //  className="rounded-full"
-            >
+            <div>
               <div className="h-8 w-8 rounded-full cursor-pointer bg-primary/60 hover:bg-green-600 flex items-center justify-center">
                 <User className="h-5 w-5 text-white" />
               </div>
