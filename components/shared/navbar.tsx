@@ -1,108 +1,104 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { Menu, User, LayoutDashboard, Settings, LogOut } from "lucide-react";
-
-import { Button } from "@/components/ui/button";
-
+import Link from 'next/link';
+import { LogOut, Settings, User } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
+import Image from 'next/image';
 
-const navItems = [
-  {
-    label: "Home",
-    href: "/",
-  },
-  {
-    label: "Services",
-    href: "/services",
-  },
-  {
-    label: "About",
-    href: "/about",
-  },
-  {
-    label: "Contact",
-    href: "/contact",
-  },
+// Navigation items array - easily organized and maintainable
+const NAV_ITEMS = [
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about' },
+  { label: 'Services', href: '/services' },
+  { label: 'Contact', href: '/contact' },
+];
+
+// User dropdown items array
+const USER_MENU_ITEMS = [
+  { label: 'Profile', icon: User, href: '/profile' },
+  { label: 'Settings', icon: Settings, href: '/settings' },
 ];
 
 export function Navbar() {
   return (
-    <nav className="sticky top-0 z-50 border-b bg-background">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
+    <nav className="border-b bg-background">
+      <div className="flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
-        <Link href="/" className="text-2xl font-bold">
-          FixItNow
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2 font-bold text-lg">
+            <div className="h-8 w-8 rounded-md flex items-center justify-center text-primary-foreground">
+              <Image
+                alt='logo'
+                src={"/home.png"}
+                width={400}
+                height={400}
+              ></Image>
+            </div>
+            <span className='text-2xl'>FixItNow</span>
+          </Link>
+        </div>
 
-        {/* Desktop Menu */}
-        <div className="hidden items-center gap-8 md:flex">
-          {navItems.map((item) => (
+        {/* Desktop Navigation Links */}
+        <div className="hidden md:flex items-center gap-8">
+          {NAV_ITEMS.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="text-sm font-medium hover:text-primary transition-colors"
+              className="text-xl font-bold text-foreground/70 hover:text-green-600 transition-colors"
             >
               {item.label}
             </Link>
           ))}
         </div>
 
-        {/* Right Side */}
-        <div className="flex items-center gap-2">
-          <Link href="/login">
-            <Button variant="outline">Login</Button>
-          </Link>
-
-          <Link href="/register">
-            <Button>Register</Button>
-          </Link>
-
-          {/* Dropdown */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button size="icon" variant="ghost">
-                <Menu className="h-5 w-5" />
-              </Button>
-            </DropdownMenuTrigger>
-
-            <DropdownMenuContent align="end" className="w-52">
-              <DropdownMenuItem asChild>
-                <Link href="/profile" className="flex items-center gap-2">
-                  <User className="h-4 w-4" />
-                  Profile
-                </Link>
-              </DropdownMenuItem>
-
-              <DropdownMenuItem asChild>
-                <Link href="/dashboard" className="flex items-center gap-2">
-                  <LayoutDashboard className="h-4 w-4" />
-                  Dashboard
-                </Link>
-              </DropdownMenuItem>
-
-              <DropdownMenuItem asChild>
-                <Link href="/settings" className="flex items-center gap-2">
-                  <Settings className="h-4 w-4" />
-                  Settings
-                </Link>
-              </DropdownMenuItem>
-
-              <DropdownMenuSeparator />
-
-              <DropdownMenuItem className="text-red-600">
-                <LogOut className="mr-2 h-4 w-4" />
-                Logout
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+        {/* User Dropdown */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <div
+            // variant="ghost"
+            //  size="icon" 
+            //  className="rounded-full"
+            >
+              <div className="h-8 w-8 rounded-full cursor-pointer bg-primary/60 hover:bg-green-600 flex items-center justify-center">
+                <User className="h-5 w-5 text-white" />
+              </div>
+            </div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-56">
+            <DropdownMenuLabel>
+              <div className="flex flex-col">
+                <span>John Doe</span>
+                <span className="text-xs font-normal text-muted-foreground">
+                  john@example.com
+                </span>
+              </div>
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            {USER_MENU_ITEMS.map((item) => {
+              const Icon = item.icon;
+              return (
+                <DropdownMenuItem key={item.href} asChild>
+                  <Link href={item.href} className="flex items-center gap-2">
+                    <Icon className="h-4 w-4" />
+                    {item.label}
+                  </Link>
+                </DropdownMenuItem>
+              );
+            })}
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="text-red-600">
+              <LogOut className="h-4 w-4 mr-2" />
+              Logout
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </nav>
   );

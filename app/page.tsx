@@ -11,6 +11,8 @@ import {
   Droplets,
   Zap,
   Wind,
+  Star,
+  Quote,
 } from "lucide-react";
 
 export default function HomePage() {
@@ -20,8 +22,10 @@ export default function HomePage() {
       <TrustBadges />
       <HowItWorks />
       <TrustCard />
+      <FeaturedTechnicians />
       <WhyChooseUs />
       <ServiceCategories />
+      <Testimonials />
       <PricingPlans />
       <CTABanner />
     </div>
@@ -32,21 +36,23 @@ export default function HomePage() {
 function Hero() {
   return (
     <section className="relative overflow-hidden bg-[#101720]">
+      <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-[#F5A623]/10 blur-3xl" />
       <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-6 py-16 md:grid-cols-2 md:py-24">
-        <div>
+        <div className="relative z-10">
           <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-[#F5A623]">
             <Sparkles className="h-3.5 w-3.5" />
-            ২,৪০০+ যাচাইকৃত টেকনিশিয়ান
+            2,400+ Verified Technicians
           </span>
 
           <h1 className="mt-5 text-4xl font-bold leading-tight text-white sm:text-5xl">
-            প্রতিটি সমস্যায়,{" "}
-            <span className="text-[#F5A623]">বিশ্বস্ত</span> সমাধান
+            Every problem meets a{" "}
+            <span className="text-[#F5A623]">trusted</span> fix
           </h1>
 
           <p className="mt-4 max-w-md text-base leading-relaxed text-[#9AA4B2]">
-            ক্লিনিং, প্লাম্বিং, ইলেকট্রিক্যাল কিংবা এসি সার্ভিস — যেকোনো বাসার
-            কাজে অভিজ্ঞ ও যাচাইকৃত টেকনিশিয়ান বুক করুন কয়েক মিনিটেই।
+            From cleaning and plumbing to electrical and AC servicing — book
+            experienced, background-checked technicians for your home in
+            minutes.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
@@ -54,15 +60,33 @@ function Hero() {
               href="/services"
               className="inline-flex items-center gap-2 rounded-lg bg-[#F5A623] px-6 py-3 text-sm font-semibold text-[#101720] transition-transform hover:-translate-y-0.5"
             >
-              এখনই বুক করুন
+              Book a Service
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
               href="/services"
               className="inline-flex items-center gap-2 rounded-lg border border-white/15 px-6 py-3 text-sm font-semibold text-white hover:bg-white/5"
             >
-              সার্ভিস দেখুন
+              Browse Services
             </Link>
+          </div>
+
+          {/* mini social proof row */}
+          <div className="mt-10 flex items-center gap-3">
+            <div className="flex -space-x-3">
+              {[
+                "https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=100&q=80",
+                "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=80",
+                "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=100&q=80",
+              ].map((src, i) => (
+                <div key={i} className="relative h-9 w-9 overflow-hidden rounded-full border-2 border-[#101720]">
+                  <Image src={src} alt="Customer" fill className="object-cover" />
+                </div>
+              ))}
+            </div>
+            <p className="text-xs text-[#9AA4B2]">
+              <span className="font-semibold text-white">50,000+</span> jobs completed
+            </p>
           </div>
         </div>
 
@@ -71,12 +95,25 @@ function Hero() {
           <div className="relative overflow-hidden rounded-2xl border border-white/10">
             <Image
               src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800&q=80"
-              alt="টেকনিশিয়ান কাজ করছেন"
+              alt="Technician at work"
               width={600}
               height={700}
               className="h-[420px] w-full object-cover md:h-[520px]"
               priority
             />
+          </div>
+
+          {/* floating rating card */}
+          <div className="absolute -bottom-6 -left-6 hidden rounded-xl bg-white p-4 shadow-xl sm:block">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F5A623]/15">
+                <Star className="h-5 w-5 fill-[#F5A623] text-[#F5A623]" />
+              </div>
+              <div>
+                <p className="text-sm font-bold text-[#101720]">4.8 / 5.0</p>
+                <p className="text-xs text-[#7C8798]">from 12,000+ reviews</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -86,10 +123,10 @@ function Hero() {
 
 /* ───────────────── TRUST BADGES ───────────────── */
 const trustItems = [
-  { icon: BadgeCheck, title: "যাচাইকৃত প্রোফাইল", desc: "প্রতিটি টেকনিশিয়ান ব্যাকগ্রাউন্ড-চেকড" },
-  { icon: Clock, title: "সময়ানুবর্তী", desc: "নির্ধারিত সময়েই টেকনিশিয়ান পৌঁছাবেন" },
-  { icon: ShieldCheck, title: "নিরাপদ পেমেন্ট", desc: "Stripe দ্বারা সুরক্ষিত লেনদেন" },
-  { icon: Smile, title: "সন্তুষ্টির নিশ্চয়তা", desc: "কাজ পছন্দ না হলে রিভিউ ও রিপোর্ট" },
+  { icon: BadgeCheck, title: "Verified Profiles", desc: "Every technician is background-checked" },
+  { icon: Clock, title: "On-Time Arrival", desc: "Technicians arrive within your scheduled slot" },
+  { icon: ShieldCheck, title: "Secure Payments", desc: "Transactions protected by Stripe" },
+  { icon: Smile, title: "Satisfaction Guarantee", desc: "Review and report if the job falls short" },
 ];
 
 function TrustBadges() {
@@ -97,10 +134,10 @@ function TrustBadges() {
     <section className="border-b border-slate-100">
       <div className="mx-auto max-w-7xl px-6 py-16 text-center">
         <p className="text-xs font-semibold uppercase tracking-wider text-[#F5A623]">
-          কেন মানুষ আমাদের বিশ্বাস করে
+          Why People Trust Us
         </p>
         <h2 className="mt-2 text-2xl font-bold text-[#101720] sm:text-3xl">
-          বাসার মালিকদের প্রথম পছন্দ
+          The first choice for homeowners
         </h2>
 
         <div className="mt-12 grid grid-cols-2 gap-8 md:grid-cols-4">
@@ -131,8 +168,11 @@ function HowItWorks() {
   return (
     <section className="bg-[#F7F8FA]">
       <div className="mx-auto max-w-7xl px-6 py-16">
-        <h2 className="text-2xl font-bold text-[#101720] sm:text-3xl">
-          যেভাবে আমাদের সার্ভিস কাজ করে
+        <p className="text-xs font-semibold uppercase tracking-wider text-[#F5A623]">
+          Simple Process
+        </p>
+        <h2 className="mt-2 text-2xl font-bold text-[#101720] sm:text-3xl">
+          How our service works
         </h2>
 
         <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
@@ -141,13 +181,13 @@ function HowItWorks() {
               key={i}
               className="relative aspect-[3/4] overflow-hidden rounded-xl"
             >
-              <Image src={src} alt="সার্ভিস স্টেপ" fill className="object-cover" />
+              <Image src={src} alt="Service step" fill className="object-cover transition-transform duration-300 hover:scale-105" />
             </div>
           ))}
         </div>
 
         <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-          {["সার্ভিস ও সময় বেছে নিন", "টেকনিশিয়ান কনফার্ম করুন", "কাজ শেষে পেমেন্ট করুন"].map(
+          {["Choose a service & time", "Confirm your technician", "Pay after job completion"].map(
             (step, i) => (
               <div key={step} className="flex items-start gap-3 rounded-lg bg-white p-4 shadow-sm">
                 <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#F5A623] text-xs font-bold text-[#101720]">
@@ -170,16 +210,17 @@ function TrustCard() {
       <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-2">
         <div>
           <h2 className="text-2xl font-bold leading-snug text-[#101720] sm:text-3xl">
-            যত্নের সাথে সেবা,{" "}
-            <span className="bg-[#F5A623] px-1 text-[#101720]">বিশ্বাস</span> ও
-            নির্ভরযোগ্যতার নিশ্চয়তায়
+            Care backed by{" "}
+            <span className="bg-[#F5A623] px-1 text-[#101720]">trust</span> and
+            reliability
           </h2>
           <p className="mt-4 text-sm leading-relaxed text-[#7C8798]">
-            আমাদের প্রতিটি টেকনিশিয়ান অভিজ্ঞতা যাচাই, দক্ষতা পরীক্ষা এবং
-            পরিচয়পত্র যাচাইয়ের মধ্য দিয়ে প্ল্যাটফর্মে যুক্ত হন।
+            Every technician on our platform goes through experience checks,
+            skill assessments, and identity verification before they can
+            accept a single booking.
           </p>
           <ul className="mt-6 space-y-3 text-sm text-[#101720]">
-            {["অভিজ্ঞতা-যাচাইকৃত টেকনিশিয়ান", "কনসিস্টেন্ট কোয়ালিটি স্ট্যান্ডার্ড", "দ্রুততম রেসপন্স টাইম"].map(
+            {["Experience-verified technicians", "Consistent quality standards", "Fastest average response time"].map(
               (item) => (
                 <li key={item} className="flex items-center gap-2">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#F5A623]" />
@@ -189,10 +230,10 @@ function TrustCard() {
             )}
           </ul>
           <Link
-            href="/services"
+            href="/about"
             className="mt-8 inline-flex items-center gap-2 rounded-lg bg-[#101720] px-6 py-3 text-sm font-semibold text-white hover:bg-[#1c2735]"
           >
-            আরও জানুন
+            Learn More
           </Link>
         </div>
 
@@ -201,11 +242,97 @@ function TrustCard() {
           <div className="absolute inset-8 overflow-hidden rounded-full border-4 border-white shadow-xl">
             <Image
               src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600&q=80"
-              alt="বিশ্বস্ত টেকনিশিয়ান"
+              alt="Trusted technician"
               fill
               className="object-cover"
             />
           </div>
+          {/* orbiting badge */}
+          <div className="absolute -bottom-2 right-4 flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-lg">
+            <ShieldCheck className="h-4 w-4 text-emerald-500" />
+            <span className="text-xs font-semibold text-[#101720]">ID Verified</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ───────────────── FEATURED TECHNICIANS (new section) ───────────────── */
+const featuredTechnicians = [
+  {
+    name: "Rafiq Ahmed",
+    role: "Plumbing Specialist",
+    rating: 4.9,
+    reviews: 312,
+    img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80",
+  },
+  {
+    name: "Shirin Akter",
+    role: "Deep Cleaning Expert",
+    rating: 4.8,
+    reviews: 278,
+    img: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&q=80",
+  },
+  {
+    name: "Kamal Hossain",
+    role: "Electrical Technician",
+    rating: 5.0,
+    reviews: 194,
+    img: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=400&q=80",
+  },
+  {
+    name: "Mahin Rahman",
+    role: "AC Servicing Pro",
+    rating: 4.7,
+    reviews: 221,
+    img: "https://images.unsplash.com/photo-1615109398623-88346a601842?w=400&q=80",
+  },
+];
+
+function FeaturedTechnicians() {
+  return (
+    <section className="bg-[#F7F8FA]">
+      <div className="mx-auto max-w-7xl px-6 py-16">
+        <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wider text-[#F5A623]">
+              Top Rated
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-[#101720] sm:text-3xl">
+              Meet our featured technicians
+            </h2>
+          </div>
+          <Link href="/services" className="text-sm font-semibold text-[#101720] hover:text-[#F5A623]">
+            View all technicians →
+          </Link>
+        </div>
+
+        <div className="mt-10 grid grid-cols-2 gap-5 lg:grid-cols-4">
+          {featuredTechnicians.map((tech) => (
+            <div
+              key={tech.name}
+              className="group overflow-hidden rounded-xl bg-white shadow-sm transition-shadow hover:shadow-lg"
+            >
+              <div className="relative h-48 w-full overflow-hidden">
+                <Image
+                  src={tech.img}
+                  alt={tech.name}
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+                <span className="absolute right-3 top-3 flex items-center gap-1 rounded-full bg-white/95 px-2 py-1 text-[11px] font-bold text-[#101720]">
+                  <Star className="h-3 w-3 fill-[#F5A623] text-[#F5A623]" />
+                  {tech.rating}
+                </span>
+              </div>
+              <div className="p-4">
+                <h3 className="text-sm font-bold text-[#101720]">{tech.name}</h3>
+                <p className="mt-0.5 text-xs text-[#7C8798]">{tech.role}</p>
+                <p className="mt-2 text-[11px] text-[#7C8798]">{tech.reviews} reviews</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -214,7 +341,7 @@ function TrustCard() {
 
 /* ───────────────── WHY CHOOSE US (dark box) ───────────────── */
 const chooseUsItems = [
-  "যাচাইকৃত পরিচয়", "ফ্লেক্সিবল সময়সূচী", "ইন্স্যুরড সার্ভিস", "সহজ বাতিলকরণ",
+  "Verified Identity", "Flexible Scheduling", "Insured Service", "Easy Cancellation",
 ];
 
 function WhyChooseUs() {
@@ -222,7 +349,7 @@ function WhyChooseUs() {
     <section className="mx-auto max-w-7xl px-6 pb-16">
       <div className="rounded-2xl bg-[#101720] px-6 py-12 text-center sm:px-12">
         <h2 className="text-2xl font-bold text-white sm:text-3xl">
-          কেন আমরাই <span className="text-[#F5A623]">সঠিক পছন্দ</span>
+          Why were the <span className="text-[#F5A623]">right choice</span>
         </h2>
 
         <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
@@ -240,7 +367,7 @@ function WhyChooseUs() {
           href="/auth/register"
           className="mt-10 inline-flex items-center gap-2 rounded-lg bg-[#F5A623] px-8 py-3 text-sm font-semibold text-[#101720]"
         >
-          শুরু করুন
+          Get Started
         </Link>
       </div>
     </section>
@@ -249,33 +376,33 @@ function WhyChooseUs() {
 
 /* ───────────────── SERVICE CATEGORIES ───────────────── */
 const categories = [
-  { icon: Droplets, title: "ক্লিনিং সার্ভিস", desc: "ডিপ ক্লিনিং ও নিয়মিত পরিচ্ছন্নতা", img: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=500&q=80" },
-  { icon: Wrench, title: "প্লাম্বিং", desc: "লিকেজ, পাইপ ও ফিটিং মেরামত", img: "https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=500&q=80" },
-  { icon: Zap, title: "ইলেকট্রিক্যাল", desc: "ওয়্যারিং, সুইচ ও ফিক্সচার", img: "https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=500&q=80" },
-  { icon: Wind, title: "এসি সার্ভিসিং", desc: "ইনস্টলেশন, সার্ভিসিং ও রিপেয়ার", img: "https://images.unsplash.com/photo-1631545806609-995a4bbd4e93?w=500&q=80" },
+  { icon: Droplets, title: "Cleaning Services", desc: "Deep cleaning and routine upkeep", img: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=500&q=80" },
+  { icon: Wrench, title: "Plumbing", desc: "Leaks, pipe repair, and fittings", img: "https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=500&q=80" },
+  { icon: Zap, title: "Electrical", desc: "Wiring, switches, and fixtures", img: "https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=500&q=80" },
+  { icon: Wind, title: "AC Servicing", desc: "Installation, servicing, and repair", img: "https://images.unsplash.com/photo-1631545806609-995a4bbd4e93?w=500&q=80" },
 ];
 
 function ServiceCategories() {
   return (
-    <section className="bg-[#F7F8FA]">
+    <section className="bg-white">
       <div className="mx-auto max-w-7xl px-6 py-16">
         <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-[#F5A623]">
-              জনপ্রিয় সার্ভিস
+              Popular Services
             </p>
             <h2 className="mt-2 text-2xl font-bold text-[#101720] sm:text-3xl">
-              ঝকঝকে বাসার জন্য বিশেষজ্ঞ সেবা
+              Expert care for a spotless home
             </h2>
           </div>
           <Link href="/services" className="text-sm font-semibold text-[#101720] hover:text-[#F5A623]">
-            সব সার্ভিস দেখুন →
+            View all services →
           </Link>
         </div>
 
         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {categories.map(({ icon: Icon, title, desc, img }) => (
-            <div key={title} className="group overflow-hidden rounded-xl bg-white shadow-sm">
+            <div key={title} className="group overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-slate-100">
               <div className="relative h-40 w-full overflow-hidden">
                 <Image
                   src={img}
@@ -297,20 +424,79 @@ function ServiceCategories() {
   );
 }
 
+/* ───────────────── TESTIMONIALS (new section) ───────────────── */
+const testimonials = [
+  {
+    quote: "The technician arrived within 30 minutes and fixed our AC same day. Booking took less than two minutes.",
+    name: "Farhana Islam",
+    role: "Homeowner, Dhanmondi",
+    img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&q=80",
+  },
+  {
+    quote: "Transparent pricing and a technician who actually knew what he was doing. No surprises at all.",
+    name: "Tanvir Hasan",
+    role: "Homeowner, Uttara",
+    img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100&q=80",
+  },
+  {
+    quote: "Rescheduling was painless and the in-app tracking made it easy to know exactly when to expect them.",
+    name: "Ayesha Siddika",
+    role: "Homeowner, Mirpur",
+    img: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&q=80",
+  },
+];
+
+function Testimonials() {
+  return (
+    <section className="bg-[#F7F8FA]">
+      <div className="mx-auto max-w-7xl px-6 py-16">
+        <div className="text-center">
+          <p className="text-xs font-semibold uppercase tracking-wider text-[#F5A623]">
+            Customer Stories
+          </p>
+          <h2 className="mt-2 text-2xl font-bold text-[#101720] sm:text-3xl">
+            What our customers are saying
+          </h2>
+        </div>
+
+        <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
+          {testimonials.map((t) => (
+            <div key={t.name} className="rounded-2xl bg-white p-6 shadow-sm">
+              <Quote className="h-6 w-6 text-[#F5A623]" />
+              <p className="mt-4 text-sm leading-relaxed text-[#101720]">
+                {t.quote}
+              </p>
+              <div className="mt-6 flex items-center gap-3">
+                <div className="relative h-10 w-10 overflow-hidden rounded-full">
+                  <Image src={t.img} alt={t.name} fill className="object-cover" />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-[#101720]">{t.name}</p>
+                  <p className="text-xs text-[#7C8798]">{t.role}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ───────────────── PRICING ───────────────── */
 const plans = [
   {
-    name: "বেসিক ভিজিট",
-    price: "৪৯৯৳",
-    period: "ভিজিট প্রতি",
-    features: ["সমস্যা ডায়াগনসিস", "স্ট্যান্ডার্ড রেসপন্স টাইম", "১৫ দিন সার্ভিস ওয়ারেন্টি"],
+    name: "Basic Visit",
+    price: "৳499",
+    period: "per visit",
+    features: ["Problem diagnosis", "Standard response time", "15-day service warranty"],
     highlight: false,
   },
   {
-    name: "প্রায়োরিটি ভিজিট",
-    price: "৯৯৯৳",
-    period: "ভিজিট প্রতি",
-    features: ["দ্রুততম রেসপন্স (৩০ মিনিট)", "সিনিয়র টেকনিশিয়ান", "৩০ দিন সার্ভিস ওয়ারেন্টি", "ফ্রি ফলো-আপ ভিজিট"],
+    name: "Priority Visit",
+    price: "৳999",
+    period: "per visit",
+    features: ["Fastest response (30 min)", "Senior technician", "30-day service warranty", "Free follow-up visit"],
     highlight: true,
   },
 ];
@@ -319,8 +505,11 @@ function PricingPlans() {
   return (
     <section className="mx-auto max-w-7xl px-6 py-16">
       <div className="text-center">
-        <h2 className="text-2xl font-bold text-[#101720] sm:text-3xl">সার্ভিস চার্জ</h2>
-        <p className="mt-2 text-sm text-[#7C8798]">প্রয়োজন অনুযায়ী প্ল্যান বেছে নিন</p>
+        <p className="text-xs font-semibold uppercase tracking-wider text-[#F5A623]">
+          Pricing
+        </p>
+        <h2 className="mt-2 text-2xl font-bold text-[#101720] sm:text-3xl">Service charges</h2>
+        <p className="mt-2 text-sm text-[#7C8798]">Choose the plan that fits your need</p>
       </div>
 
       <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-6 sm:grid-cols-2">
@@ -352,7 +541,7 @@ function PricingPlans() {
                 plan.highlight ? "bg-[#F5A623] text-[#101720]" : "bg-[#101720] text-white"
               }`}
             >
-              এই প্ল্যান বেছে নিন
+              Choose this plan
             </Link>
           </div>
         ))}
@@ -367,23 +556,23 @@ function CTABanner() {
     <section className="mx-auto max-w-7xl px-6 pb-20">
       <div className="relative overflow-hidden rounded-2xl bg-[#F5A623] px-8 py-12 sm:px-14">
         <div className="relative z-10 max-w-md">
-          <h2 className="text-2xl font-bold text-black  sm:text-3xl">
-            আপনার বাসার যত্ন আজই শুরু হোক
+          <h2 className="text-2xl font-bold text-black sm:text-3xl">
+            Your sparkling clean home starts here
           </h2>
-          <p className="mt-3 text-black text-xl font-medium">
-            নতুন আপডেট ও অফার পেতে সাবস্ক্রাইব করুন
+          <p className="mt-3 text-base font-medium text-black/80">
+            Subscribe to get the latest updates and offers
           </p>
           <form className="mt-6 flex max-w-sm gap-2">
             <input
               type="email"
-              placeholder="আপনার ইমেইল দিন"
-              className="w-full rounded-lg border-2 border-black px-4 py-2.5 text-sm text-[#101720] placeholder:text-black font-bold focus:outline-none focus:ring-2 focus:ring-[#101720]"
+              placeholder="Enter your email"
+              className="w-full rounded-lg border-2 border-black/80 bg-white px-4 py-2.5 text-sm font-medium text-[#101720] placeholder:text-[#101720]/50 focus:outline-none focus:ring-2 focus:ring-[#101720]"
             />
             <button
               type="submit"
-              className="shrink-0 rounded-lg bg-[#101720] px-5 py-2.5 text-sm font-semibold text-white"
+              className="shrink-0 rounded-lg bg-[#101720] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#1c2735]"
             >
-              সাবস্ক্রাইব
+              Subscribe
             </button>
           </form>
         </div>
@@ -391,7 +580,7 @@ function CTABanner() {
         <div className="pointer-events-none absolute -right-6 bottom-0 hidden h-full w-64 sm:block">
           <Image
             src="https://images.unsplash.com/photo-1584553421349-3557471bed79?w=500&q=80"
-            alt="সন্তুষ্ট গ্রাহক"
+            alt="Happy customer"
             fill
             className="object-cover object-top"
           />
