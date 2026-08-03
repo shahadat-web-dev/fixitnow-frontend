@@ -68,3 +68,45 @@ type IUser = {
 export type NavbarProps = {
     user: IUser
 }
+
+
+export interface Technician {
+  id: string;
+  name: string;
+  city: string;
+  profileImage: string;
+  averageRating: string;
+  totalReviews: number;
+}
+
+export interface ServiceDetail {
+  name: string;
+  description: string;
+  category: string;
+}
+
+export interface Service {
+  id: string;
+  price: string;
+  pricingType: "FIXED" | "HOURLY";
+  estimatedDuration: number;
+  serviceImage: string;
+  service: ServiceDetail;
+  technician: Technician;
+}
+
+export interface ApiResponse<T> {
+  success: boolean;
+  statusCode: number;
+  message: string;
+  data: T;
+}
+
+export interface ServiceFilters {
+  search?: string;
+  category?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  minRating?: number;
+  sort?: "popular" | "price_low" | "price_high" | "rating";
+}
