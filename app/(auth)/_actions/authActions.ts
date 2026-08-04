@@ -2,7 +2,6 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import jwt, { JwtPayload } from "jsonwebtoken";
 
 // ১. রিটার্ন ও স্টেটের জন্য নির্দিষ্ট Type তৈরি করা হলো
 export type ActionResponse = {
@@ -55,14 +54,27 @@ export const loginAction = async (
         });
       }
 
-      const decodedToken = jwt.decode(result.data.accessToken) as JwtPayload;
 
-      // রিডাইরেক্ট পাথ নির্ধারণ
-      if (decodedToken?.role === "CUSTOMER") {
+
+      const meRes = await fetch(
+        `${process.env.BACKEND_API_URL}/api/users/me`,
+        {
+          headers: {
+            Authorization: `Bearer ${result.data.accessToken}`,
+          },
+          cache: "no-store",
+        }
+      );
+
+      const user = await meRes.json();
+
+      const role = user.data.role;
+
+      if (role === "CUSTOMER") {
         targetPath = "/dashboard/customer";
-      } else if (decodedToken?.role === "TECHNICIAN") {
+      } else if (role === "TECHNICIAN") {
         targetPath = "/dashboard/technician";
-      } else if (decodedToken?.role === "ADMIN") {
+      } else if (role === "ADMIN") {
         targetPath = "/dashboard/admin";
       }
     }
@@ -124,16 +136,30 @@ export const registerAction = async (
         });
       }
 
-      const decodedToken = jwt.decode(result.data.accessToken) as JwtPayload;
+      const meRes = await fetch(
+        `${process.env.BACKEND_API_URL}/api/users/me`,
+        {
+          headers: {
+            Authorization: `Bearer ${result.data.accessToken}`,
+          },
+          cache: "no-store",
+        }
+      );
 
-      if (decodedToken?.role === "CUSTOMER") {
-        targetPath = "/dashboard";
-      } else if (decodedToken?.role === "TECHNICIAN") {
-        targetPath = "/technician-dashboard";
-      } else if (decodedToken?.role === "ADMIN") {
-        targetPath = "/admin-dashboard";
+      const user = await meRes.json();
+
+      const role = user.data.role;
+
+      if (role === "CUSTOMER") {
+        targetPath = "/dashboard/customer";
+      } else if (role === "TECHNICIAN") {
+        targetPath = "/dashboard/technician";
+      } else if (role === "ADMIN") {
+        targetPath = "/dashboard/admin";
       }
+
     }
+
   } catch (error) {
     console.error("Register Error:", error);
     return {

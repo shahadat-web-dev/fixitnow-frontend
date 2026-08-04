@@ -4,8 +4,8 @@ const GlobalLoading = () => {
   return (
     <div className="min-h-screen text-4xl font-bold tracking-wider gap-5 flex justify-center items-center opacity-50 ">
       L<Image
-        width={40}
-        height={40}
+        width={20}
+        height={20}
         src={"/home.png"} alt="" className="w-20 animate-spin" />O A D I N G
     </div>
   );
