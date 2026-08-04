@@ -1,3 +1,5 @@
+import { Navbar } from "@/components/shared/navbar";
+import { getMe } from "@/service/getMe";
 
 
 const DashboardLayout = async (
@@ -8,8 +10,11 @@ const DashboardLayout = async (
   }
 ) => {
 
+  const user = await getMe();
+
   return (
     <div className="">
+      <Navbar user={user}/>
       {children}
     </div>
   );

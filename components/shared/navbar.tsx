@@ -12,6 +12,9 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import Image from 'next/image';
+import { logout } from '@/service/logout';
+// import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
 // Navigation items array - easily organized and maintainable
 const NAV_ITEMS = [
@@ -27,7 +30,58 @@ const USER_MENU_ITEMS = [
   { label: 'Settings', icon: Settings, href: '/settings' },
 ];
 
-export function Navbar() {
+
+type IUser = {
+  success: boolean,
+  message: string,
+  data: {
+    id: string,
+    name: string,
+    email: string,
+    phone: string,
+    profileImage: string | null,
+    address: string | null,
+    city: string | null,
+    latitude: string | null,
+    longitude: string | null,
+    status: string,
+    emailVerifiedAt: string | null,
+    phoneVerifiedAt: string | null,
+    lastLoginAt: string | null,
+    createdAt: string,
+    updatedAt: string,
+    role: string
+  }
+}
+
+type NavbarProps = {
+  user?: IUser | null
+}
+
+
+
+
+export function Navbar({ user }: NavbarProps) {
+  console.log(user?.success, "success");
+  // const [isLogout, setIsLogout] = useState(false);
+
+  // const router = useRouter();
+
+  const handleUserMenuAction = async (action: string) => {
+    console.log(`User menu action: ${action}`);
+    if (action === "logout") {
+      await logout();
+      // setIsLogout(true);
+      toast.success("User Logged Out Successfully");
+      // router.push('/login');
+      // router.refresh();
+       window.location.href = "/login";
+    }
+  };
+
+
+
+
   const pathname = usePathname();
 
   // Helper to check if a nav item is active
@@ -64,11 +118,10 @@ export function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`text-xl font-bold transition-colors ${
-                  active
-                    ? 'text-green-600'
-                    : 'text-foreground/70 hover:text-green-600'
-                }`}
+                className={`text-xl font-bold transition-colors ${active
+                  ? 'text-green-600'
+                  : 'text-foreground/70 hover:text-green-600'
+                  }`}
               >
                 {item.label}
               </Link>
@@ -77,42 +130,60 @@ export function Navbar() {
         </div>
 
         {/* User Dropdown */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <div>
-              <div className="h-8 w-8 rounded-full cursor-pointer bg-primary/60 hover:bg-green-600 flex items-center justify-center">
-                <User className="h-5 w-5 text-white" />
+        {user?.data ? (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <div>
+                <div className="h-8 w-8 rounded-full cursor-pointer bg-primary/60 hover:bg-green-600 flex items-center justify-center">
+                  <User className="h-5 w-5 text-white" />
+                </div>
               </div>
-            </div>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuLabel>
-              <div className="flex flex-col">
-                <span>John Doe</span>
-                <span className="text-xs font-normal text-muted-foreground">
-                  john@example.com
-                </span>
-              </div>
-            </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            {USER_MENU_ITEMS.map((item) => {
-              const Icon = item.icon;
-              return (
-                <DropdownMenuItem key={item.href} asChild>
-                  <Link href={item.href} className="flex items-center gap-2">
-                    <Icon className="h-4 w-4" />
-                    {item.label}
-                  </Link>
-                </DropdownMenuItem>
-              );
-            })}
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-red-600">
-              <LogOut className="h-4 w-4 mr-2" />
-              Logout
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuLabel>
+                <div className="flex flex-col">
+                  <span>{user.data.name}</span>
+                  <span className="text-xs font-normal text-muted-foreground">
+                    {user.data.email}
+                  </span>
+                </div>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              {USER_MENU_ITEMS.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <DropdownMenuItem key={item.href} asChild>
+                    <Link href={item.href} className="flex items-center gap-2">
+                      <Icon className="h-4 w-4" />
+                      {item.label}
+                    </Link>
+                  </DropdownMenuItem>
+                );
+              })}
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={async () => {
+                  await handleUserMenuAction("logout")
+                }}
+                className="text-red-600">
+                <LogOut className="h-4 w-4 mr-2" />
+                Logout
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        ) : (
+          <div className="flex items-center gap-3">
+            <Link href="/login" className="text-sm font-semibold text-foreground/70 hover:text-green-600">
+              Login
+            </Link>
+            <Link
+              href="/register"
+              className="rounded-md bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-700"
+            >
+              Register
+            </Link>
+          </div>
+        )}
       </div>
     </nav>
   );

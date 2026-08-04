@@ -3,7 +3,6 @@ import "./globals.css";
 import { Roboto } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
-import { Navbar } from "@/components/shared/navbar";
 import Providers from "./providers";
 // import { getMe } from "@/service/getMe";
 
@@ -33,7 +32,7 @@ export default async function RootLayout({
         className="min-h-full flex flex-col"
         suppressHydrationWarning
       >
-        <Navbar></Navbar>
+        
         <Toaster position="top-right" richColors />
         <Providers>
           {children}
