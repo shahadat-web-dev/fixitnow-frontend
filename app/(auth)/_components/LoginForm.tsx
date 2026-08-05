@@ -27,7 +27,7 @@ const LoginForm = () => {
         <Card className="p-5 space-y-4">
           <Input name="email" type="email" placeholder="Enter Your Email" required />
           <Input name="password" type="password" placeholder="Enter Your Password" required />
-          <Button type="submit">
+          <Button className="cursor-pointer" type="submit">
             {pending ? "Submitting..." : "Login"}
           </Button>
         </Card>

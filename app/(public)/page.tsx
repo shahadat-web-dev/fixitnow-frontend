@@ -94,11 +94,11 @@ function Hero() {
           <div className="absolute -right-6 -top-6 h-40 w-40 rounded-full bg-[#F5A623]/20 blur-3xl" />
           <div className="relative overflow-hidden rounded-2xl border border-white/10">
             <Image
-              src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800&q=80"
+              src="https://images.unsplash.com/photo-1618090584176-7132b9911657?w=800&q=80"
               alt="Technician at work"
               width={600}
               height={700}
-              className="h-[420px] w-full object-cover md:h-[520px]"
+              className="h-105 w-full object-cover md:h-130"
               priority
             />
           </div>
@@ -179,7 +179,7 @@ function HowItWorks() {
           {workImages.map((src, i) => (
             <div
               key={i}
-              className="relative aspect-[3/4] overflow-hidden rounded-xl"
+              className="relative aspect-3/4 overflow-hidden rounded-xl"
             >
               <Image src={src} alt="Service step" fill className="object-cover transition-transform duration-300 hover:scale-105" />
             </div>
@@ -379,7 +379,7 @@ const categories = [
   { icon: Droplets, title: "Cleaning Services", desc: "Deep cleaning and routine upkeep", img: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=500&q=80" },
   { icon: Wrench, title: "Plumbing", desc: "Leaks, pipe repair, and fittings", img: "https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=500&q=80" },
   { icon: Zap, title: "Electrical", desc: "Wiring, switches, and fixtures", img: "https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=500&q=80" },
-  { icon: Wind, title: "AC Servicing", desc: "Installation, servicing, and repair", img: "https://images.unsplash.com/photo-1631545806609-995a4bbd4e93?w=500&q=80" },
+  { icon: Wind, title: "AC Servicing", desc: "Installation, servicing, and repair", img: "https://images.unsplash.com/photo-1657653464580-2badf3d09040?q=80&w=500" },
 ];
 
 function ServiceCategories() {

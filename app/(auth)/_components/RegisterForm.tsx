@@ -80,7 +80,7 @@ const RegisterForm = () => {
           </div>
 
           {/* Submit Button */}
-          <Button type="submit" className="w-full" disabled={pending}>
+          <Button type="submit" className="cursor-pointer w-full" disabled={pending}>
             {pending ? "Submitting..." : "Register Now"}
           </Button>
 
