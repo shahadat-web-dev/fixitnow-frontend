@@ -68,21 +68,21 @@ export async function proxy(request: NextRequest) {
     pathname.startsWith("/dashboard/customer") &&
     userRole !== "CUSTOMER"
   ) {
-    return NextResponse.redirect(new URL("/", request.url));
+    return NextResponse.redirect(new URL("/not-found", request.url));
   }
 
   if (
     pathname.startsWith("/dashboard/admin") &&
     userRole !== "ADMIN"
   ) {
-    return NextResponse.redirect(new URL("/", request.url));
+    return NextResponse.redirect(new URL("/not-found", request.url));
   }
 
   if (
     pathname.startsWith("/dashboard/technician") &&
     userRole !== "TECHNICIAN"
   ) {
-    return NextResponse.redirect(new URL("/", request.url));
+    return NextResponse.redirect(new URL("/not-found", request.url));
   }
 
   return NextResponse.next();
