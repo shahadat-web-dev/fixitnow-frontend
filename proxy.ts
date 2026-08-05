@@ -66,7 +66,7 @@ export async function proxy(request: NextRequest) {
   // Role based route protection
   if (
     pathname.startsWith("/dashboard/customer") &&
-    userRole !== "CUSTOMER"
+    userRole !== "CUSTOMER" && userRole !== "ADMIN"
   ) {
     return NextResponse.redirect(new URL("/not-found", request.url));
   }
@@ -80,7 +80,7 @@ export async function proxy(request: NextRequest) {
 
   if (
     pathname.startsWith("/dashboard/technician") &&
-    userRole !== "TECHNICIAN"
+    userRole !== "TECHNICIAN" && userRole !== "ADMIN"
   ) {
     return NextResponse.redirect(new URL("/not-found", request.url));
   }

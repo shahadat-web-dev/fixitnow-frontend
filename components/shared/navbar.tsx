@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LogOut, Settings, User } from 'lucide-react';
+import { LayoutDashboard, LogOut, Settings, User } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,10 +13,9 @@ import {
 } from '@/components/ui/dropdown-menu';
 import Image from 'next/image';
 import { logout } from '@/service/logout';
-// import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
-// Navigation items array - easily organized and maintainable
+// Navigation items
 const NAV_ITEMS = [
   { label: 'Home', href: '/' },
   { label: 'About', href: '/about' },
@@ -24,72 +23,76 @@ const NAV_ITEMS = [
   { label: 'Contact', href: '/contact' },
 ];
 
-// User dropdown items array
+// User dropdown items
 const USER_MENU_ITEMS = [
+  { label: 'Dashboard', icon: LayoutDashboard, href: '' },
   { label: 'Profile', icon: User, href: '/profile' },
   { label: 'Settings', icon: Settings, href: '/settings' },
 ];
 
-
 type IUser = {
-  success: boolean,
-  message: string,
+  success: boolean;
+  message: string;
   data: {
-    id: string,
-    name: string,
-    email: string,
-    phone: string,
-    profileImage: string | null,
-    address: string | null,
-    city: string | null,
-    latitude: string | null,
-    longitude: string | null,
-    status: string,
-    emailVerifiedAt: string | null,
-    phoneVerifiedAt: string | null,
-    lastLoginAt: string | null,
-    createdAt: string,
-    updatedAt: string,
-    role: string
-  }
-}
+    id: string;
+    name: string;
+    email: string;
+    phone: string;
+    profileImage: string | null;
+    address: string | null;
+    city: string | null;
+    latitude: string | null;
+    longitude: string | null;
+    status: string;
+    emailVerifiedAt: string | null;
+    phoneVerifiedAt: string | null;
+    lastLoginAt: string | null;
+    createdAt: string;
+    updatedAt: string;
+    role: string;
+  };
+};
 
 type NavbarProps = {
-  user?: IUser | null
-}
-
-
-
+  user?: IUser | null;
+};
 
 export function Navbar({ user }: NavbarProps) {
-  console.log(user?.success, "success");
-  // const [isLogout, setIsLogout] = useState(false);
-
-  // const router = useRouter();
-
-  const handleUserMenuAction = async (action: string) => {
-    console.log(`User menu action: ${action}`);
-    if (action === "logout") {
-      await logout();
-      // setIsLogout(true);
-      toast.success("User Logged Out Successfully");
-      // router.push('/login');
-      // router.refresh();
-       window.location.href = "/login";
-    }
-  };
-
-
-
+  console.log(user?.success, 'success');
 
   const pathname = usePathname();
 
-  // Helper to check if a nav item is active
+  const handleUserMenuAction = async (action: string) => {
+    if (action === 'logout') {
+      await logout();
+      toast.success('User Logged Out Successfully');
+      window.location.href = '/login';
+    }
+  };
+
+  // Active nav item
   const isActive = (href: string) => {
     if (href === '/') {
       return pathname === '/';
     }
     return pathname === href || pathname.startsWith(`${href}/`);
+  };
+
+  // Dashboard route by role
+  const getDashboardRoute = () => {
+    switch (user?.data?.role) {
+      case 'CUSTOMER':
+        return '/dashboard/customer';
+
+      case 'TECHNICIAN':
+        return '/dashboard/technician';
+
+      case 'ADMIN':
+        return '/dashboard/admin';
+
+      default:
+        return '/';
+    }
   };
 
   return (
@@ -100,28 +103,30 @@ export function Navbar({ user }: NavbarProps) {
           <Link href="/" className="flex items-center gap-2 font-bold text-lg">
             <div className="h-8 w-8 rounded-md flex items-center justify-center text-primary-foreground">
               <Image
-                alt='logo'
-                src={"/home.png"}
+                alt="logo"
+                src="/home.png"
                 width={400}
                 height={400}
-              ></Image>
+              />
             </div>
-            <span className='text-2xl'>FixItNow</span>
+            <span className="text-2xl">FixItNow</span>
           </Link>
         </div>
 
-        {/* Desktop Navigation Links */}
+        {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8">
           {NAV_ITEMS.map((item) => {
             const active = isActive(item.href);
+
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`text-xl font-bold transition-colors ${active
-                  ? 'text-green-600'
-                  : 'text-foreground/70 hover:text-green-600'
-                  }`}
+                className={`text-xl font-bold transition-colors ${
+                  active
+                    ? 'text-green-600'
+                    : 'text-foreground/70 hover:text-green-600'
+                }`}
               >
                 {item.label}
               </Link>
@@ -129,7 +134,7 @@ export function Navbar({ user }: NavbarProps) {
           })}
         </div>
 
-        {/* User Dropdown */}
+        {/* User */}
         {user?.data ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -139,6 +144,7 @@ export function Navbar({ user }: NavbarProps) {
                 </div>
               </div>
             </DropdownMenuTrigger>
+
             <DropdownMenuContent align="end" className="w-56">
               <DropdownMenuLabel>
                 <div className="flex flex-col">
@@ -148,24 +154,35 @@ export function Navbar({ user }: NavbarProps) {
                   </span>
                 </div>
               </DropdownMenuLabel>
+
               <DropdownMenuSeparator />
+
               {USER_MENU_ITEMS.map((item) => {
                 const Icon = item.icon;
+
+                const href =
+                  item.label === 'Dashboard'
+                    ? getDashboardRoute()
+                    : item.href;
+
                 return (
-                  <DropdownMenuItem key={item.href} asChild>
-                    <Link href={item.href} className="flex items-center gap-2">
+                  <DropdownMenuItem key={item.label} asChild>
+                    <Link href={href} className="flex items-center gap-2">
                       <Icon className="h-4 w-4" />
                       {item.label}
                     </Link>
                   </DropdownMenuItem>
                 );
               })}
+
               <DropdownMenuSeparator />
+
               <DropdownMenuItem
                 onClick={async () => {
-                  await handleUserMenuAction("logout")
+                  await handleUserMenuAction('logout');
                 }}
-                className="text-red-600">
+                className="text-red-600"
+              >
                 <LogOut className="h-4 w-4 mr-2" />
                 Logout
               </DropdownMenuItem>
@@ -173,9 +190,13 @@ export function Navbar({ user }: NavbarProps) {
           </DropdownMenu>
         ) : (
           <div className="flex items-center gap-3">
-            <Link href="/login" className="text-sm font-semibold text-foreground/70 hover:text-green-600">
+            <Link
+              href="/login"
+              className="text-sm font-semibold text-foreground/70 hover:text-green-600"
+            >
               Login
             </Link>
+
             <Link
               href="/register"
               className="rounded-md bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-700"
