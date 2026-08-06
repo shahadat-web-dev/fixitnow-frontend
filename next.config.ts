@@ -12,6 +12,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "cdn.fixitnow.com",
       },
+        {
+        protocol: "https",
+        hostname: "plus.unsplash.com",
+      },
     ],
   },
 };
