@@ -4,9 +4,9 @@ FixItNow is a modern home service booking platform where customers can book serv
 
 ## 🚀 Live Demo
 
-Frontend: https://your-frontend.vercel.app
+Frontend: [https://your-frontend.vercel.app](https://fixitnow-home-service.vercel.app/)
 
-Backend API: https://your-backend.onrender.com
+Backend API: [https://your-backend.onrender.com](https://homeservice-eis.vercel.app)
 
 ---
 
