@@ -11,6 +11,7 @@ import {
   Wrench,
   Users,
   FolderKanban,
+  PlusCircle,
 } from "lucide-react";
 
 import {
@@ -75,12 +76,17 @@ export function AppSidebar({ user }: AppSidebarProps) {
   ];
 
   const adminMenu = [
-  
+     {
+      title: "Profile",
+      url: "/dashboard/admin/profile",
+      icon: User,
+    },
     {
       title: "Users",
       url: "/dashboard/admin/users",
       icon: Users,
     },
+   
     {
       title: "Categories",
       url: "/dashboard/admin/categories",
@@ -91,10 +97,16 @@ export function AppSidebar({ user }: AppSidebarProps) {
       url: "/dashboard/admin/bookings",
       icon: CalendarCheck,
     },
+   
+     {
+      title: "Add Categories",
+      url: "/dashboard/admin/add-categories",
+      icon: PlusCircle,
+    },
     {
-      title: "Profile",
-      url: "/dashboard/admin/profile",
-      icon: User,
+      title: "Add Services",
+      url: "/dashboard/admin/add-service",
+      icon: PlusCircle,
     },
   ];
 
