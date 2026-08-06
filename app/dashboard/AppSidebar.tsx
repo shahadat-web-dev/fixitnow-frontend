@@ -66,11 +66,7 @@ export function AppSidebar({ user }: AppSidebarProps) {
       url: "/dashboard/technician/bookings",
       icon: CalendarCheck,
     },
-    {
-      title: "Availability",
-      url: "/dashboard/technician/availability",
-      icon: CalendarCheck,
-    },
+   
     {
       title: "Profile",
       url: "/dashboard/technician/profile",

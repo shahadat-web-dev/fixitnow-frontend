@@ -30,6 +30,7 @@ export default function ActionButtons({
     return (
       <div className="flex gap-2">
         <Button
+        className="cursor-pointer"
           size="sm"
           onClick={() => handleUpdate("ACCEPTED")}
         >
@@ -37,6 +38,7 @@ export default function ActionButtons({
         </Button>
 
         <Button
+        className="cursor-pointer"
           size="sm"
           variant="destructive"
           onClick={() => handleUpdate("CANCELLED")}
@@ -47,9 +49,10 @@ export default function ActionButtons({
     );
   }
 
-  if (status === "ACCEPTED") {
+  if (status === "PAID") {
     return (
       <Button
+      className="cursor-pointer"
         size="sm"
         onClick={() => handleUpdate("COMPLETED")}
       >

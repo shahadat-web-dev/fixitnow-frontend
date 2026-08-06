@@ -16,6 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { createCheckoutSession } from "@/service/payment";
 
 type BookingTableProps = {
   bookings: any[];
@@ -24,6 +25,15 @@ type BookingTableProps = {
 export default function BookingTable({
   bookings,
 }: BookingTableProps) {
+
+  const handlePayment = async (bookingId: string) => {
+    const res = await createCheckoutSession(bookingId);
+
+     if (res.success) {
+      window.location.assign(res.data.checkoutUrl);
+    }
+  };
+
   return (
     <div className="rounded-xl border bg-background shadow-sm overflow-x-auto">
       <Table>
@@ -127,7 +137,11 @@ export default function BookingTable({
 
               <TableCell className="text-right">
                 {booking.status === "ACCEPTED" ? (
-                  <Button size="sm">
+                  <Button
+                  className="cursor-pointer"
+                    size="sm"
+                    onClick={() => handlePayment(booking.id)}
+                  >
                     Pay Now
                   </Button>
                 ) : booking.status ===
