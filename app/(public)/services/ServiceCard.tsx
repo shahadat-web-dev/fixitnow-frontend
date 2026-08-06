@@ -1,25 +1,25 @@
 "use client";
 
-import { useState } from "react";
+
 import Image from "next/image";
 import { Star, MapPin, Clock } from "lucide-react";
 
 import { Service } from "@/lib/types";
-import ServiceDetailsModal from "@/components/services/ServiceDetailsModal";
+import Link from "next/link";
+
 
 export default function ServiceCard({
   service,
 }: {
   service: Service;
 }) {
-  const [open, setOpen] = useState(false);
+
 
   const rating = parseFloat(service.technician.averageRating);
 
   return (
     <>
-      <div
-        onClick={() => setOpen(true)}
+      <Link href={`/booking/${service.id}`}
         className="group cursor-pointer overflow-hidden rounded-xl border border-slate-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
       >
         <div className="relative h-44 w-full overflow-hidden">
@@ -97,13 +97,9 @@ export default function ServiceCard({
             </div>
           </div>
         </div>
-      </div>
+      </Link>
 
-      <ServiceDetailsModal
-        open={open}
-        onOpenChange={setOpen}
-        service={service}
-      />
+     
     </>
   );
 }
